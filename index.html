@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KM OSINT PORTAL</title>
+
+<style>
+:root {
+    --bg: #050505;
+    --text: #ffffff;
+    --star: rgba(255,255,255,0.8);
+    --btn-bg: #000;
+    --btn-border: #fff;
+    --btn-shadow: #444;
+    --planet-opacity: 0.35;
+}
+
+body.light {
+    --bg: #e0e0e0;
+    --text: #000;
+    --star: rgba(0,0,0,0.6);
+    --btn-bg: #fff;
+    --btn-border: #000;
+    --btn-shadow: #888;
+    --planet-opacity: 0.2;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Courier New", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.6s;
+}
+
+/* ===== SPACE ===== */
+#space {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--star);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--star);
+    animation: balance 6s ease-in-out infinite alternate;
+}
+
+@keyframes balance {
+    from { transform: translate(0,0); opacity: 0.6; }
+    to   { transform: translate(6px,-6px); opacity: 1; }
+}
+
+/* ===== SATURN ===== */
+.planet {
+    position: fixed;
+    top: 12%;
+    right: 12%;
+    font-size: 140px;
+    color: var(--text);
+    opacity: var(--planet-opacity);
+    filter: blur(2px);
+    animation: float 20s ease-in-out infinite;
+    z-index: 0;
+    transition: 0.6s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(4deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* ===== HUD ===== */
+.corner {
+    position: fixed;
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    z-index: 10;
+}
+
+.tl { top: 25px; left: 25px; }
+.tr { top: 25px; right: 25px; text-align: right; }
+
+/* ===== BUTTONS ===== */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+}
+
+.btn {
+    position: relative;
+    flex: 1;
+    height: 66px;
+    background: var(--btn-bg);
+    border: 2px solid var(--btn-border);
+    border-radius: 999px;
+    box-shadow: 6px 6px 0 var(--btn-shadow);
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.btn span {
+    position: relative;
+    z-index: 2;
+}
+
+/* МАСКА ЗА КНОПКОЙ */
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/mnt/data/dfaccae1-ea8b-4586-a9f6-0cc68cd7d0b7.png") center/65% no-repeat;
+    opacity: 0.12; /* СДЕЛАЛ ПРОЗРАЧНЕЕ */
+    z-index: 1;
+    pointer-events: none;
+    filter: contrast(115%) brightness(90%);
+}
+
+.btn:hover {
+    transform: translate(-3px,-3px);
+    box-shadow: 9px 9px 0 var(--btn-shadow);
+}
+
+.btn:active {
+    transform: translate(3px,3px);
+    box-shadow: 0 0 0 var(--btn-shadow);
+}
+
+/* ===== THEME TOGGLE ===== */
+.toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--btn-border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 20;
+    transition: 0.4s;
+}
+
+.toggle:hover {
+    transform: rotate(180deg) scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<div id="space"></div>
+<div class="planet">🪐</div>
+
+<div class="corner tl">KM OSINT<br>VER 3.0</div>
+<div class="corner tr">STATUS<br>ACTIVE</div>
+
+<div class="container">
+    <div class="row">
+        <a href="https://t.me/secretgiava" target="_blank" class="btn"><span>Телеграм</span></a>
+        <a href="https://t.me/hardteck" target="_blank" class="btn"><span>Адаптер</span></a>
+    </div>
+    <a href="https://www.tiktok.com/@secret_glava" target="_blank" class="btn"><span>Тик Ток</span></a>
+</div>
+
+<button class="toggle" onclick="document.body.classList.toggle('light')">◑</button>
+
+<script>
+const space = document.getElementById("space");
+
+for (let i = 0; i < 120; i++) {
+    const s = document.createElement("div");
+    s.className = "star";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.animationDuration = (Math.random() * 6 + 4) + "s";
+    space.appendChild(s);
+}
+</script>
+
+</body>
+</html>
